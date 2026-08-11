@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OfflineUpdateBuilderConfiguration Version="1.0">
+  <Categories>
+    <Category Id="WinTAKMaps" DisplayName="WinTAK Maps" Order="10" Enabled="true">
+      <SourceAliases>
+        <Alias Path="WinTAK\Maps" />
+        <Alias Path="WinTAK Maps" />
+        <Alias Path="WinTAKMaps" />
+      </SourceAliases>
+    </Category>
+    <Category Id="WinTAKCharts" DisplayName="WinTAK Charts" Order="20" Enabled="true">
+      <SourceAliases>
+        <Alias Path="WinTAK\Charts" />
+        <Alias Path="WinTAK Charts" />
+        <Alias Path="WinTAKCharts" />
+      </SourceAliases>
+    </Category>
+    <Category Id="VVOD" DisplayName="VVOD" Order="30" Enabled="true">
+      <SourceAliases>
+        <Alias Path="VVOD" />
+      </SourceAliases>
+    </Category>
+    <Category Id="IMOMParametrics" DisplayName="IMOM Parametrics" Order="40" Enabled="true">
+      <SourceAliases>
+        <Alias Path="IMOM\Parametrics" />
+        <Alias Path="IMOM Parametrics" />
+        <Alias Path="IMOMParametrics" />
+      </SourceAliases>
+    </Category>
+    <Category Id="IMOM" DisplayName="IMOM" Order="50" Enabled="true">
+      <SourceAliases>
+        <Alias Path="IMOM\Data" />
+        <Alias Path="IMOM Data" />
+        <Alias Path="IMOMData" />
+      </SourceAliases>
+    </Category>
+    <Category Id="DISCORT" DisplayName="DISCORT" Order="60" Enabled="true">
+      <SourceAliases>
+        <Alias Path="DISCORT" />
+        <Alias Path="Discort" />
+      </SourceAliases>
+    </Category>
+    <Category Id="TRAX" DisplayName="TRAX" Order="70" Enabled="true">
+      <SourceAliases>
+        <Alias Path="TRAX" />
+      </SourceAliases>
+    </Category>
+    <Category Id="AKA" DisplayName="AKA Files" Order="80" Enabled="true">
+      <SourceAliases>
+        <Alias Path="AKA" />
+        <Alias Path="AKA Files" />
+      </SourceAliases>
+    </Category>
+  </Categories>
+
+  <DeploymentProfiles>
+    <Profile Id="OperationalTemplate" Name="Operational Template - Paths Required" Description="Enter and verify the real application data paths before using this profile.">
+      <Targets>
+        <Target CategoryId="WinTAKMaps" DestinationPath="REQUIRED:SET_WINTAK_MAPS_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="WinTAK" />
+        <Target CategoryId="WinTAKCharts" DestinationPath="REQUIRED:SET_WINTAK_CHARTS_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="WinTAK" />
+        <Target CategoryId="VVOD" DestinationPath="REQUIRED:SET_VVOD_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="IMOMParametrics" DestinationPath="REQUIRED:SET_IMOM_PARAMETRICS_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="IMOM" />
+        <Target CategoryId="IMOM" DestinationPath="REQUIRED:SET_IMOM_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="IMOM" />
+        <Target CategoryId="DISCORT" DestinationPath="REQUIRED:SET_DISCORT_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="DISCORT" />
+        <Target CategoryId="TRAX" DestinationPath="REQUIRED:SET_TRAX_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="TRAX" />
+        <Target CategoryId="AKA" DestinationPath="REQUIRED:SET_AKA_PATH" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+      </Targets>
+    </Profile>
+
+    <Profile Id="LabStaging" Name="Lab / Staging Validation" Description="Safe validation profile. Deploys under ProgramData instead of changing operational application data.">
+      <Targets>
+        <Target CategoryId="WinTAKMaps" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\WinTAK\Maps" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="WinTAKCharts" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\WinTAK\Charts" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="VVOD" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\VVOD" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="IMOMParametrics" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\IMOM\Parametrics" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="IMOM" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\IMOM\Data" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="DISCORT" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\DISCORT" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="TRAX" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\TRAX" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+        <Target CategoryId="AKA" DestinationPath="%ProgramData%\SOACS\OfflineUpdateStaging\AKA" CopyMode="Merge" BackupExisting="true" RequiresProcessesStopped="" />
+      </Targets>
+    </Profile>
+  </DeploymentProfiles>
+</OfflineUpdateBuilderConfiguration>
