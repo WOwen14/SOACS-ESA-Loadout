@@ -1,8 +1,22 @@
-# SOACS Offline Update Builder
+# SOACS ESA Loadout
 
-Working source release: **v0.1.0**
+**Offline ESA Data and Update-Package Builder**
 
-SOACS Offline Update Builder is a Windows desktop application that converts a prepared folder of mission-data updates into a verified, offline deployment package. The first release recognizes:
+SOACS ESA Loadout is a Windows desktop application for building verified, portable update packages for disconnected ESA client systems. It scans prepared mission-data folders, classifies supported content, applies deployment profiles, generates integrity manifests, and produces offline deployment packages with PowerShell-based verification, deployment, and rollback tooling.
+
+> **Status:** Working Software / Early Baseline  
+> **Current Source Version:** v0.1.0  
+> **Platform:** Windows  
+> **Application:** WPF  
+> **Framework:** .NET Framework 4.8
+
+## Purpose
+
+ESA Loadout reduces the manual effort involved in preparing repeatable update packages for disconnected systems. Rather than hand-building deployment media and scripts for each update cycle, the application packages selected data into a controlled structure with verification, operator review, deployment safeguards, and rollback support.
+
+## Supported Content
+
+The current source recognizes:
 
 - WinTAK maps
 - WinTAK charts
@@ -12,54 +26,117 @@ SOACS Offline Update Builder is a Windows desktop application that converts a pr
 - DISCORT
 - TRAX
 - AKA files
-- Additional folders assigned by the operator or added through XML configuration
+- Additional operator-assigned folders through XML configuration
 
-## Operator workflow
+## Operator Workflow
 
-1. Select the root folder containing the update data.
-2. Click **Scan Folder**.
-3. Review the detected categories, file counts, and sizes.
-4. Assign any unrecognized folder to the correct category.
-5. Select a deployment profile and verify each destination path.
-6. Enter a package name/version and output folder.
-7. Click **Build Deployment Package**.
+1. Select the root folder containing update data.
+2. Scan the source folder.
+3. Review detected categories, file counts, and sizes.
+4. Assign any unrecognized content to the correct category.
+5. Select a deployment profile and verify destination paths.
+6. Enter package identification and choose an output location.
+7. Build the deployment package.
 
-The application produces an expanded package folder and, by default, a ZIP containing:
+## Generated Deployment Package
+
+A completed package can include:
 
 ```text
-Data\
-Manifest\PackageManifest.xml
-Manifest\SHA256SUMS.txt
-Config\DeploymentProfile.xml
-Docs\DEPLOYMENT_README.txt
+Data/
+Manifest/PackageManifest.xml
+Manifest/SHA256SUMS.txt
+Config/DeploymentProfile.xml
+Docs/DEPLOYMENT_README.txt
 Deploy-OfflineUpdates.ps1
 Verify-Package.ps1
 Rollback-OfflineUpdates.ps1
 ```
 
-## Deployment safeguards
+The builder can create both an expanded package folder and a ZIP for transfer to disconnected systems.
 
-- SHA-256 verification before any target file is changed
-- Self-elevation through Windows UAC
-- Operator-visible deployment summary and typed approval
-- Merge-only deployment in v0.1; unrelated destination files are retained
-- Backup of every existing file that will be overwritten
+## Deployment Safeguards
+
+- SHA-256 validation before target files are changed
+- Windows UAC elevation
+- Operator-visible deployment summary
+- Typed deployment approval
+- Merge-only deployment behavior in v0.1
+- Backup of files that will be overwritten
 - Post-copy SHA-256 verification
-- Deployment receipt and logs under `%ProgramData%\SOACS\OfflineUpdateBuilder`
-- Rollback restores overwritten files and removes newly added package files
-- Preview mode performs validation and reports planned file operations without changing target data
+- Deployment receipts and logs
+- Preview-only deployment mode
+- Rollback support for overwritten and newly added package files
 
-## Build requirements
+## Deployment Profiles
 
-- Visual Studio 2019 16.11 or later
-- .NET Framework 4.8 Developer Pack
-- Windows 10 or Windows 11, x64
-- No NuGet packages and no internet restore
+The repository includes two safe baseline approaches:
 
-Open `Source\SOACS.OfflineUpdateBuilder.sln`, select **Release / Any CPU**, and build the solution. The executable and `Config\DeploymentProfiles.xml` will be under `bin\Release`.
+- **Operational Template** — uses `REQUIRED:` placeholders that must be replaced with verified destination paths before operational use.
+- **Lab / Staging Validation** — deploys only beneath `%ProgramData%\SOACS\OfflineUpdateStaging` for testing.
 
-## Important configuration note
+Do not commit site-specific or operational destination paths to the public repository.
 
-The included **Lab / Staging Validation** profile deploys only under `%ProgramData%\SOACS\OfflineUpdateStaging`. The operational profile intentionally contains `REQUIRED:` placeholders. Replace those with verified paths for the actual WinTAK, VVOD, IMOM, DISCORT, TRAX, and AKA installations before building an operational package.
+## Architecture
 
-See `Docs\OperatorGuide.md` and `Docs\PackageFormat.md` for additional details.
+ESA Loadout is implemented in C# using WPF and targets **.NET Framework 4.8**. The source is compatible with Visual Studio 2019 and requires no NuGet restore or internet dependency for the current build.
+
+The internal solution and assembly currently retain the original project name `SOACS.OfflineUpdateBuilder`; the repository and product portfolio name are **SOACS ESA Loadout**.
+
+## Build
+
+Open `SOACS.OfflineUpdateBuilder.sln`, select **Release / Any CPU**, and build the solution.
+
+The Release output should contain:
+
+- `SOACS.OfflineUpdateBuilder.exe`
+- `Config/DeploymentProfiles.xml`
+
+See [Build and Test](Docs/BuildAndTest.md) for the validation procedure.
+
+## Documentation
+
+- [Operator Guide](Docs/OperatorGuide.md)
+- [Build and Test](Docs/BuildAndTest.md)
+- [Package Format](Docs/PackageFormat.md)
+- [Representative Sample Input](Docs/SampleInput.md)
+- [Changelog](CHANGELOG.md)
+
+## Repository Layout
+
+```text
+Config/        Deployment-profile configuration
+Docs/          Operator, build, test, and package documentation
+Models/        Application data models
+Properties/    Assembly metadata
+Samples/       Non-operational representative sample files
+Services/      Scanning, packaging, configuration, and script generation
+```
+
+## Development Workflow
+
+```text
+feature/* or fix/*
+        |
+        v
+     develop
+        |
+   testing/review
+        |
+        v
+       main
+        |
+        v
+   tagged release
+```
+
+- `main` represents the stable portfolio/release baseline.
+- `develop` is used for integrated development.
+- New work should be performed in feature or fix branches and merged into `develop`.
+- Tested changes are promoted from `develop` to `main` through pull requests.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for repository workflow and data-handling rules.
+
+## About SOACS
+
+ESA Loadout is part of the SOACS software suite, a set of mission-focused applications developed around real operational workflows and disconnected-system requirements.
