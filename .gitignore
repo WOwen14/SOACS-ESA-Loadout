@@ -1,0 +1,64 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+*.pdb
+*.cache
+
+# Generated deployment packages
+*.zip
+*.7z
+*.rar
+Test-Output/
+Output/
+Packages/
+DeploymentPackages/
+Generated/
+
+# Local / operational configuration
+Operational-Config/
+Site-Config/
+Local-Config/
+Config/*.bak
+*.bak
+
+# Mission/update payloads
+UpdateData/
+MissionData/
+SourceData/
+Repository/
+Staging/
+
+# Runtime logs and receipts
+Logs/
+Receipts/
+Backups/
+Temp/
+*.log
+*.csv
+
+# Secrets and environment files
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+secrets.json
+
+# OS/editor artifacts
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
