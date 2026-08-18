@@ -1,5 +1,9 @@
 # SOACS ESA Loadout
 
+<p align="center">
+  <img src="Assets/GitHub-Logo.jpg" alt="SOACS ESA Loadout" width="400">
+</p>
+
 **Offline ESA Data and Update-Package Builder**
 
 SOACS ESA Loadout is a Windows desktop application for building verified, portable update packages for disconnected ESA client systems. It scans prepared mission-data folders, classifies supported content, applies deployment profiles, generates integrity manifests, and produces offline deployment packages with PowerShell-based verification, deployment, and rollback tooling.
